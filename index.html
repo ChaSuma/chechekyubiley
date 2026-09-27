@@ -10,10 +10,31 @@
             theme: {
                 extend: {
                     colors: {
-                        blush: { 50:'#fdf8f6',100:'#f9eee9',200:'#f2dcd3',300:'#e6beb2',400:'#d49a89',600:'#a36757',900:'#4a2820' },
-                        rose: { dusty:'#d19a9d', light:'#f5e1e3', dark:'#8c5356' },
-                        cream: { 50:'#fffdf9',100:'#fcf8f2',200:'#f5ebe0',300:'#ead7c5' },
-                        gold: { accent:'#c5a059', light:'#dfc282', dark:'#9a7732' }
+                        blush: {
+                            50: '#fdf8f6',
+                            100: '#f9eee9',
+                            200: '#f2dcd3',
+                            300: '#e6beb2',
+                            400: '#d49a89',
+                            600: '#a36757',
+                            900: '#4a2820',
+                        },
+                        rose: {
+                            dusty: '#d19a9d',
+                            light: '#f5e1e3',
+                            dark: '#8c5356'
+                        },
+                        cream: {
+                            50: '#fffdf9',
+                            100: '#fcf8f2',
+                            200: '#f5ebe0',
+                            300: '#ead7c5'
+                        },
+                        gold: {
+                            accent: '#c5a059',
+                            light: '#dfc282',
+                            dark: '#9a7732'
+                        }
                     },
                     fontFamily: {
                         serif: ['Playfair Display', 'serif'],
@@ -45,39 +66,46 @@
             background-image: radial-gradient(rgba(209, 154, 157, 0.12) 1px, transparent 1px);
             background-size: 32px 32px;
         }
-        #music-panel {
-            transition: transform 0.4s ease, opacity 0.4s ease;
-        }
-        #music-panel.hidden-panel {
-            transform: translateY(120%);
-            opacity: 0;
-            pointer-events: none;
+        #intro-screen {
+            transition: opacity 0.6s ease;
         }
     </style>
 </head>
 <body class="bg-cream-100 text-gray-800 font-sans antialiased bg-pattern selection:bg-rose-dusty selection:text-white">
 
-    <!-- Плавающая кнопка музыки -->
-    <div id="audio-control" class="fixed bottom-6 right-6 z-50 bg-white/90 border border-rose-300/60 rounded-full p-3 shadow-xl backdrop-blur-md cursor-pointer flex items-center space-x-2 text-rose-dark transition-all duration-300 hover:scale-105">
-        <button id="music-toggle" class="w-10 h-10 flex items-center justify-center rounded-full focus:outline-none" title="Включить/Выключить музыку">
-            <i id="music-icon" class="fa-solid fa-music text-lg animate-pulse text-rose-dark"></i>
-        </button>
-        <span id="music-text" class="text-xs pr-3 hidden sm:inline font-medium tracking-wider text-rose-dark">Музыка для настроения</span>
-    </div>
+    <!-- Скрытый аудиоплеер -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="mergen-kuular-avay.mp3" type="audio/mpeg">
+    </audio>
 
-    <!-- Панель с плеером Яндекс Музыки -->
-    <div id="music-panel" class="hidden-panel fixed bottom-24 right-6 z-50 w-[90vw] max-w-[400px] bg-white rounded-3xl shadow-2xl border border-rose-200 overflow-hidden">
-        <div class="flex items-center justify-between px-4 py-3 bg-blush-100 border-b border-rose-100">
-            <span class="font-serif text-sm font-semibold text-rose-dark">Мерген Куулар — Авай</span>
-            <button id="music-close" class="text-rose-dark hover:text-rose-300 transition-colors" title="Закрыть">
-                <i class="fa-solid fa-xmark text-lg"></i>
+    <!-- Приветственный экран -->
+    <div id="intro-screen" class="fixed inset-0 z-[60] flex flex-col items-center justify-center text-center px-4 bg-gradient-to-b from-cream-50 via-blush-50 to-cream-200">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-200/30 via-transparent to-transparent z-0"></div>
+        <div class="relative z-10 max-w-2xl space-y-8">
+            <div class="inline-flex items-center space-x-3 border-y border-gold-accent/50 py-2 px-6 rounded-full bg-white/70 backdrop-blur-sm shadow-sm">
+                <span class="text-gold-dark text-sm tracking-widest uppercase font-semibold">Куулар Чечек Алексеевна</span>
+                <span class="text-gold-accent">•</span>
+                <span class="text-gold-dark text-sm tracking-widest uppercase font-semibold">70 хар</span>
+            </div>
+            <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-wide text-gray-900">
+                70 харлаан
+                <span class="rose-gradient-text block mt-3 font-serif italic text-4xl sm:text-6xl">Юбилейже чалап тур мен</span>
+            </h1>
+            <p class="text-gray-600 text-base sm:text-lg max-w-md mx-auto">
+                Чалап тур мен — 70 харлаан юбилейже
+            </p>
+            <button id="enter-btn" class="px-10 py-4 bg-rose-dusty text-white font-bold rounded-2xl shadow-lg hover:bg-rose-dark transition-all duration-300 hover:scale-105 text-lg tracking-wider">
+                Кирер
             </button>
         </div>
-        <iframe
-            frameborder="0"
-            style="border:none;width:100%;height:180px;display:block;"
-            src="https://music.yandex.ru/album/23284658/track/106676721?utm_source=web&utm_medium=copy_link">
-        </iframe>
+    </div>
+
+    <!-- Плавающая кнопка управления музыкой -->
+    <div id="audio-control" class="fixed bottom-6 right-6 z-50 bg-white/90 border border-rose-300/60 rounded-full p-3 shadow-xl backdrop-blur-md cursor-pointer flex items-center space-x-2 text-rose-dark transition-all duration-300 hover:scale-105 hidden">
+        <button id="music-toggle" class="w-10 h-10 flex items-center justify-center rounded-full focus:outline-none" title="Включить/Выключить музыку">
+            <i id="music-icon" class="fa-solid fa-volume-high text-lg text-rose-dark"></i>
+        </button>
+        <span id="music-text" class="text-xs pr-3 hidden sm:inline font-medium tracking-wider text-rose-dark">Мерген Куулар — Авай</span>
     </div>
 
     <!-- HERO SECTION -->
@@ -146,19 +174,19 @@
 
                 <div class="md:col-span-7 space-y-6 text-gray-700 leading-relaxed text-base sm:text-lg" data-aos="fade-left">
                     <p>
-                        Чырык черге бодарааным &uuml;емден бээр<br>
+                        Чырык черге бодарааным үемден бээр<br>
                         70 чылым шуушпушаан эрте берди.<br>
-                        Ажы-т&ouml;л&uuml;м, т&ouml;релдерим,<br>
-                        Ажыл-ижим, эжим-&ouml;&ouml;р&uuml;м ачызында<br>
-                        Чонум-чоорган, х&ouml;й&uuml;м-х&ouml;йле&ntilde;,<br>
+                        Ажы-төлүм, төрелдерим,<br>
+                        Ажыл-ижим, эжим-өөрүм ачызында<br>
+                        Чонум-чоорган, хөйүм-хөйлең,<br>
                         чоргаар болуп амыдырап, чурттап чор мен,
                     </p>
                     <p>
                         Чашкы, чалыы чылдарывыс<br>
-                        сагынмышаан, амыдырал чажыттарын, к&uuml;зелдерин сагывышаан,<br>
-                        Чурттап эрткен &uuml;евисти эргий к&ouml;р&uuml;п,<br>
-                        чугаалажып, х&ouml;&ouml;режип алыылы&ntilde;ар.<br>
-                        Авыралдыг &ынак чонум шупту&ntilde;арны<br>
+                        сагынмышаан, амыдырал чажыттарын, күзелдерин сагывышаан,<br>
+                        Чурттап эрткен үевисти эргий көрүп,<br>
+                        чугаалажып, хөөрежип алыылыңар.<br>
+                        Авыралдыг ынак чонум шуптуңарны<br>
                     </p>
                 </div>
             </div>
@@ -175,6 +203,7 @@
 
             <div class="relative border-l-2 border-rose-200 ml-4 sm:ml-32 space-y-12">
 
+                <!-- Timeline item 1 -->
                 <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-dusty border-4 border-cream-50 shadow"></div>
                     <div class="bg-white/90 border border-rose-100 p-6 rounded-3xl shadow-md sm:flex items-center justify-between">
@@ -188,6 +217,7 @@
                     </div>
                 </div>
 
+                <!-- Timeline item 2 -->
                 <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-dusty border-4 border-cream-50 shadow"></div>
                     <div class="bg-white/90 border border-rose-100 p-6 rounded-3xl shadow-md sm:flex items-center justify-between">
@@ -201,6 +231,7 @@
                     </div>
                 </div>
 
+                <!-- Timeline item 3 -->
                 <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-dusty border-4 border-cream-50 shadow"></div>
                     <div class="bg-white/90 border border-rose-100 p-6 rounded-3xl shadow-md sm:flex items-center justify-between">
@@ -214,6 +245,7 @@
                     </div>
                 </div>
 
+                <!-- Timeline item 4 -->
                 <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-dusty border-4 border-cream-50 shadow"></div>
                     <div class="bg-white/90 border border-rose-100 p-6 rounded-3xl shadow-md sm:flex items-center justify-between">
@@ -237,27 +269,53 @@
             <div class="text-center mb-16" data-aos="fade-up">
                 <h2 class="font-serif text-4xl sm:text-5xl font-bold text-gray-900">Амыдыралым</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-transparent via-rose-300 to-transparent mx-auto mt-4"></div>
-          
+                <p class="text-gray-600 mt-4 text-base sm:text-lg italic">Чурттап эрткен үевисти сагыжыга туткан ужурлуг бис</p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-                <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up">
+
+                <!-- Photo 1 -->
+                <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up" data-aos-delay="0">
                     <div class="overflow-hidden rounded-2xl">
-                        <img src="https://i.oneme.ru/i?r=BUE2sh_eZW7g8kugOdIm2NotDPpec03Gyjo508PliGiGu7sAocC3cusKI1j8J2bb-Vu-lVzsyQysV3DaVqjHCp2E&expires=1790571194297" alt="Фотография 1" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                        <img src="photo1.jpg" alt="Фотография 1" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
                     </div>
                 </div>
+
+                <!-- Photo 2 -->
                 <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
                     <div class="overflow-hidden rounded-2xl">
-                        <img src="https://i.oneme.ru/i?r=BUE2sh_eZW7g8kugOdIm2Not7o48ZRjOwmzndV2T101jIOioQqgkiCzUAb73tx0MfFW-lVzsyQysV3DaVqjHCp2E&expires=1790573865710" alt="Фотография 2" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                        <img src="photo2.jpg" alt="Фотография 2" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
                     </div>
                 </div>
+
+                <!-- Photo 3 -->
                 <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
                     <div class="overflow-hidden rounded-2xl">
-                        <img src="https://i.oneme.ru/i?r=BUE2sh_eZW7g8kugOdIm2NotnDdlam2l9k-D5nL8Q-wiw_SP4WDhaFC7s3iw8mweEsy-lVzsyQysV3DaVqjHCp2E&expires=1790581642254" alt="Фотография 3" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                        <img src="photo3.jpg" alt="Фотография 3" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
                     </div>
                 </div>
-              
+
+                <!-- Photo 4 -->
+                <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up" data-aos-delay="0">
+                    <div class="overflow-hidden rounded-2xl">
+                        <img src="photo4.jpg" alt="Фотография 4" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                    </div>
                 </div>
+
+                <!-- Photo 5 -->
+                <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <div class="overflow-hidden rounded-2xl">
+                        <img src="photo5.jpg" alt="Фотография 5" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                </div>
+
+                <!-- Photo 6 -->
+                <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                    <div class="overflow-hidden rounded-2xl">
+                        <img src="photo6.jpg" alt="Фотография 6" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -286,6 +344,7 @@
                     </button>
                 </div>
 
+                <!-- Блок карты: Кафе «Ноян», Чадан, Ленина 48а -->
                 <div class="h-80 w-full rounded-2xl overflow-hidden border border-rose-200 shadow-inner">
                     <iframe
                         src="https://yandex.ru/map-widget/v1/?ll=91.5671145%2C51.2836419&z=17&pt=91.5671145,51.2836419,pm2blm"
@@ -315,6 +374,62 @@
             duration: 800,
         });
 
+        // === Приветственный экран + запуск музыки ===
+        const music = document.getElementById('bg-music');
+        const introScreen = document.getElementById('intro-screen');
+        const enterBtn = document.getElementById('enter-btn');
+        const audioControl = document.getElementById('audio-control');
+        const musicToggle = document.getElementById('music-toggle');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+
+        let isPlaying = false;
+
+        // Клик по кнопке «Кирер» — запускаем музыку
+        enterBtn.addEventListener('click', () => {
+            introScreen.style.opacity = '0';
+            introScreen.style.pointerEvents = 'none';
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                audioControl.classList.remove('hidden');
+            }, 600);
+
+            music.play().then(() => {
+                isPlaying = true;
+                updateMusicUI();
+            }).catch(() => {
+                // Если браузер заблокировал — ничего, пользователь может нажать кнопку музыки
+                isPlaying = false;
+                updateMusicUI();
+            });
+        });
+
+        // Кнопка вкл/выкл музыки
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                music.pause();
+                isPlaying = false;
+            } else {
+                music.play().then(() => {
+                    isPlaying = true;
+                    updateMusicUI();
+                }).catch(() => {
+                    console.log('Не удалось воспроизвести');
+                });
+            }
+            updateMusicUI();
+        });
+
+        function updateMusicUI() {
+            if (isPlaying) {
+                musicIcon.className = 'fa-solid fa-volume-high text-lg text-rose-dark';
+                musicText.innerText = 'Мерген Куулар — Авай';
+            } else {
+                musicIcon.className = 'fa-solid fa-volume-xmark text-lg text-rose-dark/50';
+                musicText.innerText = 'Музыка соксурал';
+            }
+        }
+
         // Countdown Timer — ноябрь 14, 2026
         const eventDate = new Date('2026-11-14T15:00:00+07:00').getTime();
 
@@ -343,31 +458,6 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
-
-        // === Музыка: Яндекс Музыка плеер ===
-        const musicToggleBtn = document.getElementById('music-toggle');
-        const musicIcon = document.getElementById('music-icon');
-        const musicText = document.getElementById('music-text');
-        const musicPanel = document.getElementById('music-panel');
-        const musicClose = document.getElementById('music-close');
-
-        let panelOpen = false;
-
-        function togglePanel() {
-            panelOpen = !panelOpen;
-            if (panelOpen) {
-                musicPanel.classList.remove('hidden-panel');
-                musicIcon.className = "fa-solid fa-volume-high text-lg text-rose-dark";
-                musicText.innerText = "Мерген Куулар — Авай";
-            } else {
-                musicPanel.classList.add('hidden-panel');
-                musicIcon.className = "fa-solid fa-music text-lg animate-pulse text-rose-dark";
-                musicText.innerText = "Музыка для настроения";
-            }
-        }
-
-        musicToggleBtn.addEventListener('click', togglePanel);
-        musicClose.addEventListener('click', togglePanel);
 
         // Add to Calendar
         function addToCalendar() {
