@@ -10,31 +10,10 @@
             theme: {
                 extend: {
                     colors: {
-                        blush: {
-                            50: '#fdf8f6',
-                            100: '#f9eee9',
-                            200: '#f2dcd3',
-                            300: '#e6beb2',
-                            400: '#d49a89',
-                            600: '#a36757',
-                            900: '#4a2820',
-                        },
-                        rose: {
-                            dusty: '#d19a9d',
-                            light: '#f5e1e3',
-                            dark: '#8c5356'
-                        },
-                        cream: {
-                            50: '#fffdf9',
-                            100: '#fcf8f2',
-                            200: '#f5ebe0',
-                            300: '#ead7c5'
-                        },
-                        gold: {
-                            accent: '#c5a059',
-                            light: '#dfc282',
-                            dark: '#9a7732'
-                        }
+                        blush: { 50:'#fdf8f6',100:'#f9eee9',200:'#f2dcd3',300:'#e6beb2',400:'#d49a89',600:'#a36757',900:'#4a2820' },
+                        rose: { dusty:'#d19a9d', light:'#f5e1e3', dark:'#8c5356' },
+                        cream: { 50:'#fffdf9',100:'#fcf8f2',200:'#f5ebe0',300:'#ead7c5' },
+                        gold: { accent:'#c5a059', light:'#dfc282', dark:'#9a7732' }
                     },
                     fontFamily: {
                         serif: ['Playfair Display', 'serif'],
@@ -66,16 +45,39 @@
             background-image: radial-gradient(rgba(209, 154, 157, 0.12) 1px, transparent 1px);
             background-size: 32px 32px;
         }
+        #music-panel {
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        #music-panel.hidden-panel {
+            transform: translateY(120%);
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="bg-cream-100 text-gray-800 font-sans antialiased bg-pattern selection:bg-rose-dusty selection:text-white">
 
-    <!-- Audio player controls -->
+    <!-- Плавающая кнопка музыки -->
     <div id="audio-control" class="fixed bottom-6 right-6 z-50 bg-white/90 border border-rose-300/60 rounded-full p-3 shadow-xl backdrop-blur-md cursor-pointer flex items-center space-x-2 text-rose-dark transition-all duration-300 hover:scale-105">
-        <button id="music-toggle" class="w-10 h-10 flex items-center justify-center rounded-full focus:outline-none" title="Включить/Выключить фоновую музыку">
+        <button id="music-toggle" class="w-10 h-10 flex items-center justify-center rounded-full focus:outline-none" title="Включить/Выключить музыку">
             <i id="music-icon" class="fa-solid fa-music text-lg animate-pulse text-rose-dark"></i>
         </button>
         <span id="music-text" class="text-xs pr-3 hidden sm:inline font-medium tracking-wider text-rose-dark">Музыка для настроения</span>
+    </div>
+
+    <!-- Панель с плеером Яндекс Музыки -->
+    <div id="music-panel" class="hidden-panel fixed bottom-24 right-6 z-50 w-[90vw] max-w-[400px] bg-white rounded-3xl shadow-2xl border border-rose-200 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-3 bg-blush-100 border-b border-rose-100">
+            <span class="font-serif text-sm font-semibold text-rose-dark">Мерген Куулар — Авай</span>
+            <button id="music-close" class="text-rose-dark hover:text-rose-300 transition-colors" title="Закрыть">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <iframe
+            frameborder="0"
+            style="border:none;width:100%;height:180px;display:block;"
+            src="https://music.yandex.ru/album/23284658/track/106676721?utm_source=web&utm_medium=copy_link">
+        </iframe>
     </div>
 
     <!-- HERO SECTION -->
@@ -138,25 +140,25 @@
             <div class="grid md:grid-cols-12 gap-8 items-center">
                 <div class="md:col-span-5" data-aos="fade-right">
                     <div class="relative mx-auto max-w-xs sm:max-w-sm rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2">
-                        <img src=https://i.oneme.ru/i?r=BUE2sh_eZW7g8kugOdIm2Not94W1JrajzoDjrolVG7UhWNMo_DLYF3mcXHWv5V6AI1S-lVzsyQysV3DaVqjHCp2E&expires=1790573654626 alt="Куулар Чечек" class="w-full h-auto object-cover rounded-2xl">
+                        <img src="https://i.oneme.ru/i?r=BUE2sh_eZW7g8kugOdIm2Not94W1JrajzoDjrolVG7UhWNMo_DLYF3mcXHWv5V6AI1S-lVzsyQysV3DaVqjHCp2E&expires=1790573654626" alt="Куулар Чечек" class="w-full h-auto object-cover rounded-2xl">
                     </div>
                 </div>
 
                 <div class="md:col-span-7 space-y-6 text-gray-700 leading-relaxed text-base sm:text-lg" data-aos="fade-left">
                     <p>
-                        Чырык черге бодарааным үемден бээр<br>
+                        Чырык черге бодарааным &uuml;емден бээр<br>
                         70 чылым шуушпушаан эрте берди.<br>
-                        Ажы-төлүм, төрелдерим,<br>
-                        Ажыл-ижим, эжим-өөрүм ачызында<br>
-                        Чонум-чоорган, хөйүм-хөйлең,<br>
+                        Ажы-т&ouml;л&uuml;м, т&ouml;релдерим,<br>
+                        Ажыл-ижим, эжим-&ouml;&ouml;р&uuml;м ачызында<br>
+                        Чонум-чоорган, х&ouml;й&uuml;м-х&ouml;йле&ntilde;,<br>
                         чоргаар болуп амыдырап, чурттап чор мен,
                     </p>
                     <p>
                         Чашкы, чалыы чылдарывыс<br>
-                        сагынмышаан, амыдырал чажыттарын, күзелдерин сагывышаан,<br>
-                        Чурттап эрткен үевисти эргий көрүп,<br>
-                        чугаалажып, хөөрежип алыылыңар.<br>
-                        Авыралдыг ынак чонум шуптуңарны<br>
+                        сагынмышаан, амыдырал чажыттарын, к&uuml;зелдерин сагывышаан,<br>
+                        Чурттап эрткен &uuml;евисти эргий к&ouml;р&uuml;п,<br>
+                        чугаалажып, х&ouml;&ouml;режип алыылы&ntilde;ар.<br>
+                        Авыралдыг &ынак чонум шупту&ntilde;арны<br>
                     </p>
                 </div>
             </div>
@@ -173,7 +175,6 @@
 
             <div class="relative border-l-2 border-rose-200 ml-4 sm:ml-32 space-y-12">
 
-                <!-- Timeline item 1 -->
                 <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-dusty border-4 border-cream-50 shadow"></div>
                     <div class="bg-white/90 border border-rose-100 p-6 rounded-3xl shadow-md sm:flex items-center justify-between">
@@ -187,7 +188,6 @@
                     </div>
                 </div>
 
-                <!-- Timeline item 2 -->
                 <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-dusty border-4 border-cream-50 shadow"></div>
                     <div class="bg-white/90 border border-rose-100 p-6 rounded-3xl shadow-md sm:flex items-center justify-between">
@@ -201,7 +201,6 @@
                     </div>
                 </div>
 
-                <!-- Timeline item 3 -->
                 <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-dusty border-4 border-cream-50 shadow"></div>
                     <div class="bg-white/90 border border-rose-100 p-6 rounded-3xl shadow-md sm:flex items-center justify-between">
@@ -215,7 +214,6 @@
                     </div>
                 </div>
 
-                <!-- Timeline item 4 -->
                 <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
                     <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rose-dusty border-4 border-cream-50 shadow"></div>
                     <div class="bg-white/90 border border-rose-100 p-6 rounded-3xl shadow-md sm:flex items-center justify-between">
@@ -229,6 +227,37 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="py-24 px-4 bg-white/60 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="font-serif text-4xl sm:text-5xl font-bold text-gray-900">Амыдыралым</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-rose-300 to-transparent mx-auto mt-4"></div>
+          
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+                <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up">
+                    <div class="overflow-hidden rounded-2xl">
+                        <img src="https://i.oneme.ru/i?r=BUE2sh_eZW7g8kugOdIm2NotDPpec03Gyjo508PliGiGu7sAocC3cusKI1j8J2bb-Vu-lVzsyQysV3DaVqjHCp2E&expires=1790571194297" alt="Фотография 1" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                </div>
+                <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <div class="overflow-hidden rounded-2xl">
+                        <img src="https://i.oneme.ru/i?r=BUE2sh_eZW7g8kugOdIm2Not7o48ZRjOwmzndV2T101jIOioQqgkiCzUAb73tx0MfFW-lVzsyQysV3DaVqjHCp2E&expires=1790573865710" alt="Фотография 2" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                </div>
+                <div class="rounded-3xl overflow-hidden border-4 border-rose-100 shadow-xl bg-blush-100 p-2 group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                    <div class="overflow-hidden rounded-2xl">
+                        <img src="https://i.oneme.ru/i?r=BUE2sh_eZW7g8kugOdIm2NotnDdlam2l9k-D5nL8Q-wiw_SP4WDhaFC7s3iw8mweEsy-lVzsyQysV3DaVqjHCp2E&expires=1790581642254" alt="Фотография 3" class="w-full h-48 sm:h-64 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                </div>
+              
+                </div>
             </div>
         </div>
     </section>
@@ -257,20 +286,16 @@
                     </button>
                 </div>
 
-                <!-- Map -->
-         
-
-<!-- Блок карты: Кафе «Ноян», Чадан, Ленина 48а -->
-<div class="h-80 w-full rounded-2xl overflow-hidden border border-rose-200 shadow-inner">
-  <iframe
-    src="https://yandex.ru/map-widget/v1/?ll=91.5671145%2C51.2836419&z=17&pt=91.5671145,51.2836419,pm2blm"
-    width="100%"
-    height="100%"
-    style="border: 0;"
-    allowfullscreen=""
-    loading="lazy"
-  ></iframe>
-</div>
+                <div class="h-80 w-full rounded-2xl overflow-hidden border border-rose-200 shadow-inner">
+                    <iframe
+                        src="https://yandex.ru/map-widget/v1/?ll=91.5671145%2C51.2836419&z=17&pt=91.5671145,51.2836419,pm2blm"
+                        width="100%"
+                        height="100%"
+                        style="border: 0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                    ></iframe>
+                </div>
             </div>
         </div>
     </section>
@@ -319,56 +344,30 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Background Music
-        let audioCtx = null;
-        let isPlaying = false;
-        let synthInterval = null;
-
-        function playAmbientNote() {
-            if (!audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                const notes = [261.63, 293.66, 329.63, 392.00, 440.00];
-                osc.frequency.setValueAtTime(notes[Math.floor(Math.random() * notes.length)], audioCtx.currentTime);
-                osc.type = 'sine';
-
-                gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.06, audioCtx.currentTime + 1.5);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4.0);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 4.1);
-            } catch(e) {
-                console.log(e);
-            }
-        }
-
+        // === Музыка: Яндекс Музыка плеер ===
         const musicToggleBtn = document.getElementById('music-toggle');
         const musicIcon = document.getElementById('music-icon');
         const musicText = document.getElementById('music-text');
+        const musicPanel = document.getElementById('music-panel');
+        const musicClose = document.getElementById('music-close');
 
-        musicToggleBtn.addEventListener('click', () => {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            isPlaying = !isPlaying;
-            if (isPlaying) {
+        let panelOpen = false;
+
+        function togglePanel() {
+            panelOpen = !panelOpen;
+            if (panelOpen) {
+                musicPanel.classList.remove('hidden-panel');
                 musicIcon.className = "fa-solid fa-volume-high text-lg text-rose-dark";
-                musicText.innerText = "Музыка играет";
-                playAmbientNote();
-                synthInterval = setInterval(playAmbientNote, 4000);
+                musicText.innerText = "Мерген Куулар — Авай";
             } else {
+                musicPanel.classList.add('hidden-panel');
                 musicIcon.className = "fa-solid fa-music text-lg animate-pulse text-rose-dark";
                 musicText.innerText = "Музыка для настроения";
-                if (synthInterval) clearInterval(synthInterval);
             }
-        });
+        }
+
+        musicToggleBtn.addEventListener('click', togglePanel);
+        musicClose.addEventListener('click', togglePanel);
 
         // Add to Calendar
         function addToCalendar() {
